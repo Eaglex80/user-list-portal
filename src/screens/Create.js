@@ -15,7 +15,7 @@ export default function Create() {
   });
 
   const [userDetails, setUserDetails] = useState(initialUserDetails);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing] = useState(false);
 
   const [userList, setUserList] = useState(
     storage.getItem("userList") !== null
@@ -25,9 +25,9 @@ export default function Create() {
 
   const [inputBlankError, setInputBlankError] = useState("");
 
-  useEffect(() => {
-    storage.setItem("userList", JSON.stringify(userList));
-  }, [userList, storage]);
+  // useEffect(() => {
+  //   storage.setItem("userList", JSON.stringify(userList));
+  // }, [userList, storage]);
 
   function onUserInputHandler(e, userField) {
     setUserDetails((currentUser) => ({
@@ -64,13 +64,17 @@ export default function Create() {
       return;
     }
 
-    setUserList((currentUsers) => [
-      ...currentUsers,
+    const newList = [
+      ...userList,
       {
         ...userDetails,
         id: nanoid(),
       },
-    ]);
+    ];
+
+    storage.setItem("userList", JSON.stringify(newList));
+
+    setUserList([]);
 
     setUserDetails(initialUserDetails);
 

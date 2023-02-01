@@ -78,9 +78,10 @@ export default function Edit(props) {
       return user;
     });
 
-    setUserList(newList);
 
     storage.setItem("userList", JSON.stringify(newList));
+    
+    setUserList([]);
 
     setUserDetails(initialUserDetails);
 
